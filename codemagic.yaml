@@ -4,15 +4,13 @@ workflows:
     environment:
       flutter: stable
     scripts:
-      - name: Create Flutter project
+      - name: Setup Flutter project
         script: |
-          flutter create --project-name stock_app .
-          cp lib/main.dart /tmp/main.dart
-          cp pubspec.yaml /tmp/pubspec.yaml
-          cp /tmp/main.dart lib/main.dart
-          cp /tmp/pubspec.yaml pubspec.yaml
-      - name: Get packages
-        script: flutter pub get
+          flutter create --project-name stock_app tmp_project
+          cp -r tmp_project/android ./android
+          cp -r tmp_project/ios ./ios
+          cp -r tmp_project/test ./test
+          flutter pub get
       - name: Build APK
         script: flutter build apk --release
     artifacts:
