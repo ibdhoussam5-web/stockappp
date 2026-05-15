@@ -65,19 +65,36 @@ class _ListPageState extends State<ListPage> {
     fetchData();
   }
   Future<void> fetchData() async {
-    final res = await http.get(Uri.parse('$baseUrl/api/${widget.type}'));
-    setState(() => data = jsonDecode(res.body));
+    try {
+      final res = await http.get(Uri.parse('$baseUrl/api/${widget.type}'));
+      setState(() => data = jsonDecode(res.body));
+    } catch (e) {
+      print(e);
+    }
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.type.toUpperCase())),
-      body: ListView.builder(
-        itemCount: data.length,
-        itemBuilder: (_, i) => Card(
-  child: ListTile(
-    title: Text(data[i]['client'] ?? data[i]['fournisseur'] ?? data[i]['produit'] ?? ''),
-    subtitle: Text(data[i]['montant']?.toString() ?? data[i]['quantite']?.toString() ?? ''),
-    trailing: Text(data[i]['date'] ?? ''),
-  ),
-),
+      body: data.isEmpty
+        ? const Center(child: CircularProgressIndicator())
+        : ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (_, i) => Card(
+            child: ListTile(
+              title: Text(
+                data[i]['client']?.toString() ??
+                data[i]['fournisseur']?.toString() ??
+                data[i]['produit']?.toString() ?? ''
+              ),
+              subtitle: Text(
+                data[i]['montant']?.toString() ??
+                data[i]['quantite']?.toString() ?? ''
+              ),
+              trailing: Text(data[i]['date']?.toString() ?? ''),
+            ),
+          ),
+        ),
+    );
+  }
+}
