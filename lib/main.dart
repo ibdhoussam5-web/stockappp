@@ -74,10 +74,10 @@ class _ListPageState extends State<ListPage> {
       appBar: AppBar(title: Text(widget.type.toUpperCase())),
       body: ListView.builder(
         itemCount: data.length,
-        itemBuilder: (_, i) => ListTile(
-          title: Text(data[i].toString()),
-        ),
-      ),
-    );
-  }
-}
+        itemBuilder: (_, i) => Card(
+  child: ListTile(
+    title: Text(data[i]['client'] ?? data[i]['fournisseur'] ?? data[i]['produit'] ?? ''),
+    subtitle: Text(data[i]['montant']?.toString() ?? data[i]['quantite']?.toString() ?? ''),
+    trailing: Text(data[i]['date'] ?? ''),
+  ),
+),
