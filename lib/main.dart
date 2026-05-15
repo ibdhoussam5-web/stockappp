@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const String baseUrl = 'http://192.168.1.26:5000';
+const String baseUrl = 'http://192.168.1.4:5000';
 
 void main() {
   runApp(const MyApp());
