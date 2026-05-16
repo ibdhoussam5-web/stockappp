@@ -10,6 +10,9 @@ workflows:
           cp -r tmp_project/android ./android
           cp -r tmp_project/ios ./ios
           cp -r tmp_project/test ./test
+          mkdir -p android/app/src/main/res/xml
+          cp android/app/src/main/res/xml/network_security_config.xml android/app/src/main/res/xml/network_security_config.xml 2>/dev/null || true
+          sed -i 's/<application/<application android:networkSecurityConfig="@xml\/network_security_config"/' android/app/src/main/AndroidManifest.xml
           flutter pub get
       - name: Build APK
         script: flutter build apk --release
