@@ -6,9 +6,13 @@ workflows:
     scripts:
       - name: Setup Flutter project
         script: |
-          flutter create --project-name stock_app .
+          flutter create --project-name stock_app tmp_project
+          cp -r tmp_project/android ./android
+          cp -r tmp_project/ios ./ios
+          cp -r tmp_project/test ./test
           flutter pub get
       - name: Build APK
-        script: flutter build apk --release
+        script: |
+          flutter build apk --release --no-shrink
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
