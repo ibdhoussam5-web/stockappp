@@ -6,18 +6,7 @@ workflows:
     scripts:
       - name: Setup Flutter project
         script: |
-          flutter create --project-name stock_app tmp_project
-          cp -r tmp_project/android ./android
-          cp -r tmp_project/ios ./ios
-          cp -r tmp_project/test ./test
-          mkdir -p android/app/src/main/res/xml
-          cat > android/app/src/main/res/xml/network_security_config.xml << 'EOF'
-          <?xml version="1.0" encoding="utf-8"?>
-          <network-security-config>
-              <base-config cleartextTrafficPermitted="true"/>
-          </network-security-config>
-          EOF
-          sed -i 's/<application/<application android:networkSecurityConfig="@xml\/network_security_config"/' android/app/src/main/AndroidManifest.xml
+          flutter create --project-name stock_app .
           flutter pub get
       - name: Build APK
         script: flutter build apk --release
